@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Профиль: данные пользователя, кнопка Log out, My orders
+   ========================================================================== */
+
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: min(var(--container), 100% - 2 * var(--gutter));
+  margin: 0 auto;
+  padding-top: 41px;
+}
+
+.profile__eyebrow {
+  font-size: 16px;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.profile__name {
+  margin-top: 16px;
+  font-size: 56px;
+  line-height: 56px;
+  letter-spacing: var(--tracking);
+  overflow-wrap: anywhere;
+}
+
+.profile__contact {
+  display: block;
+  max-width: 100%;
+  margin-top: 18px;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+  line-height: 16px;
+  transition: opacity var(--transition);
+}
+
+.profile__contact:hover {
+  opacity: 0.6;
+}
+
+.profile__logout {
+  width: 214px;
+  margin-top: 25px;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: var(--sf-ls-bold);
+}
+
+.profile__orders {
+  scroll-margin-top: 24px;
+}
+
+@media not all and (max-width: 767px) {
+  .profile > * {
+    position: relative;
+    left: 1px;
+  }
+}
+
+@media (max-width: 767px) {
+  .profile__info {
+    padding-top: 57px;
+  }
+
+  /* в мобильном макете подписи "My profile" нет */
+  .profile__eyebrow {
+    display: none;
+  }
+
+  .profile__name {
+    margin-top: 0;
+    font-size: 32px;
+    line-height: 32px;
+  }
+
+  .profile__contact {
+    margin-top: 12px;
+    font-family: var(--font-sf);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: var(--sf-ls);
+  }
+
+  .profile__contact:first-of-type {
+    margin-top: 17px;
+  }
+
+  .profile__logout {
+    width: 100%;
+    margin-top: 23px;
+  }
+
+  .profile__orders {
+    margin-top: 56px;
+  }
+}

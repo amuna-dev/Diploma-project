@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Log In — WEPRO</title>
+  <meta name="description" content="Log in to your WEPRO account.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/inter-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://api.wepro.uz" crossorigin>
+  <link rel="preload" href="assets/fonts/sf-pro-display-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/sf-pro-display-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="js/boot.js"></script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/auth.css">
+  <script type="module" src="js/pages/login.js"></script>
+</head>
+<body class="page page--login">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <noscript><p class="noscript" lang="ru">Для работы сайта включите JavaScript.</p></noscript>
+
+  <header class="header">
+    <div class="header__bar">
+      <button class="header__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg class="icon-menu" width="24" height="24" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#menu"></use></svg>
+        <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"/></svg>
+      </button>
+      <nav class="header__nav" aria-label="Main">
+        <a class="header__link" href="index.html" data-nav>Home</a>
+        <a class="header__link" href="products.html" data-nav>Products</a>
+      </nav>
+      <a class="logo header__logo" href="index.html" aria-label="WEPRO — home page">
+        <img src="assets/images/logo.png" width="147" height="51" alt="WEPRO">
+      </a>
+      <div class="header__actions">
+        <a class="header__link" href="login.html" data-account-link>Account</a>
+        <a class="header__link" href="cart.html" data-nav>Bag (<span data-bag-count>0</span>)</a>
+      </div>
+    </div>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden>
+      <a class="mobile-menu__link" href="index.html" data-nav>Home</a>
+      <a class="mobile-menu__link" href="products.html" data-nav>Products</a>
+    </nav>
+  </header>
+
+  <main id="main" class="auth">
+    <form class="auth__form" id="login-form" method="post" novalidate>
+      <h1 class="page-title auth__title">Log In</h1>
+
+      <div class="field">
+        <label class="field__label" for="login-email">Email</label>
+        <input class="field__input" id="login-email" name="email" type="email" placeholder="Email" autocomplete="email" aria-describedby="login-email-error" required>
+        <p class="field__error" id="login-email-error" aria-live="polite" hidden></p>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="login-password">Password</label>
+        <input class="field__input" id="login-password" name="password" type="password" placeholder="Your password" autocomplete="current-password" aria-describedby="login-password-error" required>
+        <p class="field__error" id="login-password-error" aria-live="polite" hidden></p>
+      </div>
+      <button class="btn btn--black btn--block auth__submit" type="submit">Log In</button>
+      <p class="form-error" role="alert" hidden></p>
+      <p class="auth__switch">Don't have an account? <a id="register-link" href="register.html">Register</a></p>
+    </form>
+  </main>
+
+</body>
+</html>

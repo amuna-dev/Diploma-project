@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Product — WEPRO</title>
+  <meta name="description" content="Product details and customer reviews.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/inter-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://api.wepro.uz" crossorigin>
+  <link rel="preload" href="assets/fonts/sf-pro-display-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/sf-pro-display-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="js/boot.js"></script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/product.css">
+  <script type="module" src="js/pages/product.js"></script>
+</head>
+<body class="page page--product">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <noscript><p class="noscript" lang="ru">Для работы сайта включите JavaScript.</p></noscript>
+
+  <header class="header">
+    <div class="header__bar">
+      <button class="header__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg class="icon-menu" width="24" height="24" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#menu"></use></svg>
+        <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"/></svg>
+      </button>
+      <nav class="header__nav" aria-label="Main">
+        <a class="header__link" href="index.html" data-nav>Home</a>
+        <a class="header__link" href="products.html" data-nav>Products</a>
+      </nav>
+      <a class="logo header__logo" href="index.html" aria-label="WEPRO — home page">
+        <img src="assets/images/logo.png" width="147" height="51" alt="WEPRO">
+      </a>
+      <div class="header__actions">
+        <a class="header__link" href="login.html" data-account-link>Account</a>
+        <a class="header__link" href="cart.html" data-nav>Bag (<span data-bag-count>0</span>)</a>
+      </div>
+    </div>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden>
+      <a class="mobile-menu__link" href="index.html" data-nav>Home</a>
+      <a class="mobile-menu__link" href="products.html" data-nav>Products</a>
+    </nav>
+  </header>
+
+  <main id="main" class="product-page is-loading">
+    <section class="product" aria-labelledby="product-title">
+      <div class="product__image"></div>
+      <div class="product__info">
+        <h1 class="product__title" id="product-title">&nbsp;</h1>
+        <p class="product__price" id="product-price">&nbsp;</p>
+        <div class="product__buy">
+          <div class="qty" role="group" aria-label="Quantity">
+            <button class="qty__btn" id="qty-minus" type="button" aria-label="Decrease quantity"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#minus"></use></svg></button>
+            <span class="qty__value" id="qty-value" aria-live="polite">1</span>
+            <button class="qty__btn" id="qty-plus" type="button" aria-label="Increase quantity"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#plus"></use></svg></button>
+          </div>
+          <button class="btn btn--black btn--pill product__add" id="add-to-cart" type="button">Add to cart</button>
+        </div>
+        <p class="product__message" id="cart-message" hidden></p>
+      </div>
+    </section>
+
+    <section class="reviews" aria-labelledby="reviews-title">
+      <div class="reviews__head">
+        <h2 class="reviews__title" id="reviews-title">All Reviews <span class="reviews__count" id="reviews-count"></span></h2>
+        <button class="btn btn--black btn--pill reviews__write" id="write-review" type="button">Write a Review</button>
+      </div>
+      <div class="reviews__list" id="reviews-list"></div>
+    </section>
+  </main>
+
+  <div class="modal" id="comment-modal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog modal__dialog--comment" role="dialog" aria-modal="true" aria-labelledby="comment-modal-title">
+      <h2 class="modal__title" id="comment-modal-title">Leave a comment</h2>
+      <form class="modal__form" id="comment-form" method="post" novalidate>
+        <div class="field">
+          <label class="field__label" for="comment-text">Text</label>
+          <textarea class="field__input field__input--textarea" id="comment-text" name="text" placeholder="Your comment" maxlength="300" aria-describedby="comment-error" required></textarea>
+          <p class="field__error" id="comment-error" role="alert" hidden></p>
+        </div>
+        <button class="btn btn--black btn--block" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="thanks-modal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog modal__dialog--thanks" role="dialog" aria-modal="true" aria-labelledby="thanks-title">
+      <div class="modal__head">
+        <h2 class="modal__title--thanks" id="thanks-title">Thank you!</h2>
+        <p class="modal__text">You left new comment</p>
+      </div>
+      <button class="btn btn--black btn--block btn--lg" id="thanks-ok" type="button">Okey</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a class="footer__logo" href="index.html"><img src="assets/icons/skin-clinic-logo.svg" width="121" height="19" alt="Skin—Clinic"></a>
+          <ul class="footer__social">
+            <li><span class="footer__social-icon" role="img" aria-label="Instagram"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#instagram"></use></svg></span></li>
+            <li><span class="footer__social-icon" role="img" aria-label="Facebook"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#facebook"></use></svg></span></li>
+            <li><span class="footer__social-icon" role="img" aria-label="YouTube"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#youtube"></use></svg></span></li>
+          </ul>
+        </div>
+        <div class="footer__col footer__col--products">
+          <h2 class="footer__title">Products</h2>
+          <ul class="footer__list">
+            <li><span class="footer__text">Creams</span></li>
+            <li><span class="footer__text">Serums</span></li>
+            <li><span class="footer__text">Lotions</span></li>
+            <li><span class="footer__text">Shop all</span></li>
+          </ul>
+        </div>
+        <div class="footer__col footer__col--support">
+          <h2 class="footer__title">Support</h2>
+          <ul class="footer__list">
+            <li><span class="footer__text">FAQs</span></li>
+            <li><span class="footer__text">Return policy</span></li>
+            <li><span class="footer__text">Shipping policy</span></li>
+            <li><span class="footer__text">Start a return</span></li>
+          </ul>
+        </div>
+        <div class="footer__col footer__col--company">
+          <h2 class="footer__title">Company</h2>
+          <ul class="footer__list">
+            <li><span class="footer__text">About us</span></li>
+            <li><span class="footer__text">Journal</span></li>
+            <li><span class="footer__text">Contact us</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 Skin—Clinic</p>
+        <ul class="footer__legal">
+          <li><span class="footer__text">Terms of service</span></li>
+          <li><span class="footer__text">Privacy policy</span></li>
+          <li><span class="footer__text">Cookies settings</span></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,370 @@
+/* ==========================================================================
+   components.css — повторяющиеся блоки: карточка товара, категория,
+   степпер количества, модальные окна, заглушки загрузки, пагинация
+   ========================================================================== */
+
+/* ---------- Сетка карточек товаров ---------- */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px 24px;
+}
+
+@media (max-width: 1023px) {
+  .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Карточка товара (282 x 348: фото 282x324, отступ 8, строка 16) ---------- */
+
+.product-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-card__image {
+  position: relative;
+  aspect-ratio: 282 / 324;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--c-surface);
+}
+
+.product-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* картинка не загрузилась — остаётся аккуратный серый фон */
+.is-broken img {
+  visibility: hidden;
+}
+
+.product-card__link:hover .product-card__image img {
+  transform: scale(1.04);
+}
+
+.product-card__info {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.product-card__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-card__price {
+  flex: 0 0 auto;
+  padding-right: 0.06em;
+  font-size: 16px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+/* Компактная мобильная карточка (каталог, заказы): 2 колонки, фото 160 x 140,
+   название и цена друг под другом */
+@media (max-width: 767px) {
+  .products-grid--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .products-grid--compact .product-card__image {
+    aspect-ratio: 160 / 140;
+  }
+
+  .products-grid--compact .product-card__info {
+    flex-direction: column;
+    gap: 11px;
+  }
+}
+
+/* заглушка во время загрузки */
+.product-card--skeleton .product-card__image,
+.skeleton-line {
+  background: linear-gradient(90deg, #f0f0f0 25%, #f7f7f7 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.2s ease-in-out infinite;
+}
+
+.product-card--skeleton .product-card__image {
+  margin-bottom: 8px;
+}
+
+.skeleton-line {
+  display: block;
+  width: 60%;
+  height: 16px;
+  border-radius: 4px;
+}
+
+@keyframes skeleton {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card--skeleton .product-card__image,
+  .skeleton-line {
+    animation: none;
+  }
+
+  .product-card__image img {
+    transition: none;
+  }
+}
+
+/* ---------- Стеклянная кнопка (hero и категории): blur 52 в Figma = blur(26px) в CSS ---------- */
+
+.glass-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  padding: 24px calc(48px + 0.06em) 24px 48px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(26px);
+  backdrop-filter: blur(26px);
+  color: var(--c-white);
+  font-size: 16px;
+  line-height: 16px;
+  white-space: nowrap;
+  transition: background-color var(--transition);
+}
+
+/* ---------- Степпер количества (127 x 48, #F0F0F0, радиус 62) ---------- */
+
+.qty {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-width: 127px;
+  height: 48px;
+  padding: 12px 20px;
+  border-radius: 62px;
+  background: var(--c-surface);
+}
+
+.qty__btn {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transition: opacity var(--transition);
+}
+
+.qty__btn:disabled {
+  opacity: 0.3;
+}
+
+.qty__btn:hover:not(:disabled) {
+  opacity: 0.6;
+}
+
+.qty__value {
+  flex-shrink: 0;
+  min-width: 7px;
+  font-family: var(--font-sf);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: var(--sf-ls);
+  text-align: left;
+}
+
+/* ---------- Модальные окна ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+/* фон: чёрный 30% + размытие (Figma: background blur 8 → CSS blur(4px)) */
+.modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.modal__dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 50px;
+  background: var(--c-white);
+  animation: modal-in 0.2s ease;
+}
+
+.modal__dialog--comment {
+  max-width: 525px;
+}
+
+.modal__dialog--thanks {
+  max-width: 600px;
+  gap: 50px;
+}
+
+.modal__title {
+  font-size: 40px;
+  line-height: 40px;
+  letter-spacing: var(--tracking);
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 23px;
+}
+
+.modal__form .btn--block {
+  border-radius: 4px;
+}
+
+.modal__head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* "Thank you!" — SF Pro 600 48px / 110%, трекинг -4% */
+.modal__title--thanks {
+  font-family: var(--font-sf);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 52.8px;
+  letter-spacing: calc(-0.04em + var(--sf-ls-bold));
+}
+
+.modal__text {
+  font-family: var(--font-sf);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 26.4px;
+  letter-spacing: var(--sf-ls-bold);
+  color: var(--c-thanks-text);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal__dialog {
+    animation: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .modal__dialog {
+    padding: 32px 24px;
+  }
+
+  .modal__dialog--thanks {
+    gap: 32px;
+  }
+
+  .modal__title {
+    font-size: 32px;
+    line-height: 32px;
+  }
+
+  .modal__title--thanks {
+    font-size: 40px;
+    line-height: 44px;
+  }
+
+  .modal__text {
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  .btn--lg {
+    height: 64px;
+    font-size: 20px;
+    line-height: 20px;
+  }
+}
+
+/* ---------- Пагинация каталога ---------- */
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 48px;
+}
+
+.pagination:empty {
+  display: none;
+}
+
+.pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 62px;
+  background: var(--c-surface);
+  font-family: var(--font-sf);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: var(--sf-ls);
+  transition: opacity var(--transition), background-color var(--transition);
+}
+
+.pagination__btn:disabled {
+  opacity: 0.35;
+}
+
+.pagination__btn:hover:not(:disabled):not(.is-current) {
+  opacity: 0.7;
+}
+
+.pagination__btn.is-current {
+  background: var(--c-black);
+  color: var(--c-white);
+}

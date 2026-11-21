@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Главная: hero, Best sellers, Shop by category, Featured products
+   ========================================================================== */
+
+/* ---------- Hero (desktop 1920 x 654, mobile 390 x 600) ---------- */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 654px;
+  overflow: hidden;
+  color: var(--c-white);
+  background: #2a2925;
+}
+
+.hero__picture,
+.hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__image {
+  object-fit: cover;
+}
+
+/* затемнение 20% поверх фото, как в макете */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  width: min(var(--container), 100% - 2 * var(--gutter));
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero__eyebrow,
+.hero__title-mobile {
+  display: none;
+}
+
+.hero__title {
+  font-size: 56px;
+  line-height: 56px;
+  letter-spacing: var(--tracking);
+}
+
+/* на десктопе кнопка светлее (46%) и с чёрным текстом */
+.hero__button {
+  width: 166px;
+  background: rgba(255, 255, 255, 0.46);
+  color: var(--c-black);
+}
+
+.hero__button:hover {
+  background: rgba(255, 255, 255, 0.62);
+}
+
+@media (max-width: 767px) {
+  .hero {
+    height: 600px;
+  }
+
+  .hero__content {
+    width: 100%;
+    padding: 0 24px 56px;
+  }
+
+  .hero__eyebrow {
+    display: block;
+    font-size: 16px;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+
+  .hero__title-desktop {
+    display: none;
+  }
+
+  .hero__title-mobile {
+    display: block;
+  }
+
+  .hero__title {
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  .hero__button {
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--c-white);
+  }
+
+  .hero__button:hover {
+    background: rgba(255, 255, 255, 0.28);
+  }
+}
+
+/* ---------- Секции ---------- */
+
+@media (max-width: 767px) {
+  .home ~ .footer {
+    margin-top: 56px;
+  }
+}
+
+/* ---------- Товары на главной: на мобильном одна колонка, 4 карточки ---------- */
+
+@media (max-width: 767px) {
+  .products-grid--home {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .products-grid--home > :nth-child(n + 5) {
+    display: none;
+  }
+
+  .products-grid--home .product-card__image {
+    aspect-ratio: 342 / 393;
+  }
+}
+
+/* ---------- Shop by category (384 x 440, радиус 8, кнопка-подпись внизу) ---------- */
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.category-card {
+  position: relative;
+  display: block;
+  aspect-ratio: 384 / 440;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--c-surface);
+}
+
+.category-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.category-card:hover .category-card__image {
+  transform: scale(1.04);
+}
+
+.category-card__label {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+}
+
+.category-card:hover .category-card__label {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+@media (max-width: 767px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-card {
+    aspect-ratio: 342 / 392;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .category-card__image {
+    transition: none;
+  }
+}

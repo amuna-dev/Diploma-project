@@ -1,0 +1,348 @@
+/* ==========================================================================
+   Каталог: панель фильтров (desktop — слева, mobile — шторка снизу) + сетка
+   ========================================================================== */
+
+.catalog {
+  display: grid;
+  grid-template-columns: 295px minmax(0, var(--container));
+  align-items: start;
+  column-gap: 20px;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 42px 45px 0;
+}
+
+.catalog__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.catalog__filters-btn {
+  display: none;
+}
+
+/* ---------- Компактные карточки (каталог, заказы) ---------- */
+
+@media (max-width: 1279px) {
+  .catalog .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1023px) {
+  .catalog .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Панель фильтров (295 x 429, рамка 10%, радиус 20) ---------- */
+
+.filters__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 19px 23px;
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  background: var(--c-white);
+}
+
+.filters__backdrop {
+  display: none;
+}
+
+.filters__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 24px;
+}
+
+.filters__title,
+.filters__price-toggle {
+  font-family: var(--font-sf);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: var(--sf-ls-bold);
+}
+
+.filters__icon {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* линия толщиной 1px, которая не занимает места в раскладке (как в Figma) */
+.filters__line {
+  height: 0;
+  margin: -1px 0 0;
+  border: 0;
+  border-top: 1px solid var(--c-border);
+}
+
+.filters__categories {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filter-category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  height: 16px;
+  color: var(--c-muted);
+  font-family: var(--font-sf);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: var(--sf-ls);
+  text-align: left;
+  transition: color var(--transition);
+}
+
+.filter-category:hover,
+.filter-category.is-active {
+  color: var(--c-black);
+}
+
+.filter-category.is-active {
+  font-weight: 600;
+  letter-spacing: var(--sf-ls-bold);
+}
+
+.filter-category__icon {
+  transition: transform var(--transition);
+}
+
+.filter-category.is-active .filter-category__icon {
+  transform: rotate(90deg);
+}
+
+.filters__price {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filters__price-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  height: 24px;
+  text-align: left;
+}
+
+.filters__chevron {
+  transition: transform var(--transition);
+}
+
+.filters__price-toggle[aria-expanded='false'] .filters__chevron {
+  transform: rotate(180deg);
+}
+
+/* ---------- Ползунок цены с двумя ручками ---------- */
+
+.range {
+  --thumb-w: 20px;
+  --thumb-h: 20px;
+  position: relative;
+  height: 41px;
+}
+
+.range__track {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  border-radius: 20px;
+  background: var(--c-surface);
+}
+
+.range__fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--thumb-w) / 2 + (100% - var(--thumb-w)) * var(--from-ratio, 0));
+  right: calc(var(--thumb-w) / 2 + (100% - var(--thumb-w)) * (1 - var(--to-ratio, 1)));
+  border-radius: 20px;
+  background: var(--c-black);
+}
+
+.range__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.range__input--min.is-top {
+  z-index: 3;
+}
+
+.range__input::-webkit-slider-runnable-track {
+  height: 20px;
+  background: none;
+}
+
+.range__input::-moz-range-track {
+  height: 20px;
+  background: none;
+}
+
+.range__input::-webkit-slider-thumb {
+  width: var(--thumb-w);
+  height: var(--thumb-h);
+  border: 0;
+  border-radius: 50%;
+  background: var(--c-black);
+  cursor: grab;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.range__input::-moz-range-thumb {
+  width: var(--thumb-w);
+  height: var(--thumb-h);
+  border: 0;
+  border-radius: 50%;
+  background: var(--c-black);
+  cursor: grab;
+  pointer-events: auto;
+}
+
+.range__input:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+
+.range__input:focus-visible {
+  outline: none;
+}
+
+.range__input:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--c-white), 0 0 0 5px var(--c-black);
+}
+
+.range__input:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px var(--c-white), 0 0 0 5px var(--c-black);
+}
+
+.range__label {
+  position: absolute;
+  top: 24px;
+  transform: translateX(-50%);
+  font-family: var(--font-sf);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: var(--sf-ls);
+  white-space: nowrap;
+}
+
+.range__label--min {
+  left: calc(var(--thumb-w) / 2 + (100% - var(--thumb-w)) * var(--from-ratio, 0));
+}
+
+.range__label--max {
+  left: calc(var(--thumb-w) / 2 + (100% - var(--thumb-w)) * var(--to-ratio, 1));
+}
+
+.filters__apply {
+  width: 100%;
+}
+
+/* ---------- Мобильный каталог ---------- */
+
+@media (max-width: 767px) {
+  .catalog {
+    display: block;
+    padding: 40px 24px 0;
+  }
+
+  .catalog__head {
+    margin-bottom: 15px;
+  }
+
+  .catalog__filters-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-right: 1px;
+    border-radius: 50%;
+    background: var(--c-surface);
+  }
+
+  /* Шторка с фильтрами снизу экрана */
+  .filters:not(.is-sheet) {
+    display: none;
+  }
+
+  .filters.is-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .filters__backdrop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  .filters__panel {
+    position: relative;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-bottom: calc(27px + env(safe-area-inset-bottom));
+    border-radius: 20px 20px 0 0;
+    animation: sheet-in 0.25s ease;
+  }
+
+  /* в мобильном макете ручки ползунка — овалы 28 x 20 */
+  .range {
+    --thumb-w: 28px;
+  }
+
+  .catalog ~ .footer {
+    margin-top: 46px;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filters__panel {
+    animation: none;
+  }
+}
