@@ -148,7 +148,7 @@
   font-size: 16px;
   line-height: 16px;
   white-space: nowrap;
-  transition: background-color var(--transition);
+  transition: background-color 0.3s ease-out;
 }
 
 /* ---------- Степпер количества (127 x 48, #F0F0F0, радиус 62) ---------- */
@@ -225,7 +225,6 @@
   width: 100%;
   padding: 50px;
   background: var(--c-white);
-  animation: modal-in 0.2s ease;
 }
 
 .modal__dialog--comment {
@@ -278,22 +277,6 @@
   color: var(--c-thanks-text);
 }
 
-@keyframes modal-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .modal__dialog {
-    animation: none;
-  }
-}
 
 @media (max-width: 767px) {
   .modal__dialog {

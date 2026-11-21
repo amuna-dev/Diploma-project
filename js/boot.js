@@ -2,14 +2,19 @@
 // ширину похожего шрифта Inter под макет (класс no-satoshi на <html>).
 (function () {
   var root = document.documentElement;
-  var probe = document.createElement('span');
-  probe.textContent = 'mmmmmmmmmmlli WEPRO';
-  probe.style.cssText = 'position:absolute;left:-9999px;top:0;font-size:72px;font-family:monospace;visibility:hidden';
-  root.appendChild(probe);
-  var base = probe.offsetWidth;
-  probe.style.fontFamily = '"Satoshi", monospace';
-  if (probe.offsetWidth === base) root.classList.add('no-satoshi');
-  root.removeChild(probe);
+  if (!/\/product(\.html)?$/.test(location.pathname)) return;
+  if (!window.matchMedia('(max-width: 767px)').matches) return;
+  if (!document.fonts || !document.fonts.load) {
+    root.classList.add('no-satoshi');
+    return;
+  }
+  window.addEventListener('load', function () {
+    document.fonts.load('400 16px "Satoshi"').then(function (faces) {
+      if (!faces.length) root.classList.add('no-satoshi');
+    }, function () {
+      root.classList.add('no-satoshi');
+    });
+  });
 })();
 
 // ES-модули не работают, если открыть файл двойным кликом (адрес file://)
